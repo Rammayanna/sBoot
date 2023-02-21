@@ -1,28 +1,37 @@
 pipeline {
     agent any
-    stages{
-        
+    stages {
         stage ('clean-up') {
             steps {
                 cleanWs()
             }
         }
-                                
-        stage ('build') {
+        
+        stage ('clone') {
             steps {
-                dir ('sBoot_microservice') {
-                    sh 'mvn clean install'
-                }
-                
+                sh 'git clone https://github.com/Rammayanna/sBoot.git'
             }
         }
         
+        stage ('build') {
+            
+                steps {
+                dir ('sBoot'){
+                    
+                    sh 'mvn clean install'
+            
+                }
+            
+            }
+            
+        }
+        
         stage ('test') {
-            steps {
-                dir ('sBoot_microservice') {
+            
+                steps {
+                    dir ('sBoot') {
                     archiveArtifacts artifacts: 'target/*.war', followSymlinks: false
                 }
-                
             }
         }
     }
