@@ -21,7 +21,7 @@ pipeline {
             steps {
                 dir ('sBoot') {
                     archiveArtifacts artifacts: 'target/*.war', followSymlinks: false
-                }
+                
                 
             }
         }
